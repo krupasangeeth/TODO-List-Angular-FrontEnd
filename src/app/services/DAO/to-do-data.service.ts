@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { APT_URL } from 'src/app/app.constants';
 import { ToDo } from 'src/app/list-to-do/list-to-do.component';
 import { WelcomeDAOService } from './welcome-dao.service';
 
@@ -19,23 +20,23 @@ export class ToDoDataService {
     //   Authorization : BasicAuthString
     // })
 
-    return this.http.get<ToDo[]>(`http://localhost:8080/users/${name}/todos`);
+    return this.http.get<ToDo[]>(`${APT_URL}/users/${name}/todos`);
   }
 
   deleteTodo(name : String, id: any ){
-    return this.http.delete(`http://localhost:8080/users/${name}/todos/${id}`)
+    return this.http.delete(`${APT_URL}/users/${name}/todos/${id}`)
   }
 
   retriveTodo(name : String, id: any ){
-    return this.http.get<ToDo>(`http://localhost:8080/users/${name}/todos/${id}`)
+    return this.http.get<ToDo>(`${APT_URL}/users/${name}/todos/${id}`)
   }
 
   updateTodo(name : String, id: any , todo : ToDo){
-    return this.http.put(`http://localhost:8080/users/${name}/todos/${id}`,todo);
+    return this.http.put(`${APT_URL}/users/${name}/todos/${id}`,todo);
   }
 
   createTodo(name : String, todo : ToDo){
-    return this.http.put(`http://localhost:8080/users/${name}/todos`,todo);
+    return this.http.put(`${APT_URL}/users/${name}/todos`,todo);
   }
 
 }

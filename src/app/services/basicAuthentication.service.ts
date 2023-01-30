@@ -1,26 +1,34 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {map} from 'rxjs/operators';
+import { APT_URL} from '../app.constants';
+
+
+export const TOKEN = 'token';
+export const AUTHENTICATED_USER = 'AuthenticatedUser';
+
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class BasicAuthenticationService {
 
   constructor(private http : HttpClient) { }
 
   executeBasicAuthenticationService(username: any,password: any){
 
-    let BasicAuthString = "Basic "+window.btoa(username+":"+password);
-    // let BasicAuthString = "Basic "+username+":"+password;
+    // let BasicAuthString = "Basic "+window.btoa(username+":"+password);
+    let BasicAuthString = username;
     let header = new HttpHeaders({
       Authorization : BasicAuthString
     })
-    return this.http.get<AuthenticationBean>(`http://localhost:8080/basicauth`, {headers : header})
+    return this.http.get<AuthenticationBean>(`${APT_URL}/basicauth`, {headers : header})
     .pipe(
       map(
         data=>{
-          sessionStorage.setItem('AuthenticatedUser',username);
-          sessionStorage.setItem('token',BasicAuthString);
+          sessionStorage.setItem(AUTHENTICATED_USER,username);
+          sessionStorage.setItem(TOKEN,BasicAuthString);
           return data;
         }
       )
@@ -31,22 +39,24 @@ export class BasicAuthenticationService {
  
   }
 
-  // getAuthenticatedUser(){
-  //   return sessionStorage.getItem('AuthenticatedUser');
-  // }
+  getAuthenticatedUser(){
+    return sessionStorage.getItem(AUTHENTICATED_USER);
+  }
 
-  // getAuthenticatedToken(){
-  //   if(this.getAuthenticatedUser())
-  //     return  sessionStorage.getItem('token');
-  // }
+  getAuthenticatedToken(){
+    if(this.getAuthenticatedUser())
+      return  sessionStorage.getItem(TOKEN);
+    return "";
+  }
 
 
   isUserLogin(){
-    let user = sessionStorage.getItem('AuthenticatedUser');
+    let user = sessionStorage.getItem(AUTHENTICATED_USER);
     return (user !== null)
   }
   userLogout(){
-    sessionStorage.removeItem('AuthenticatedUser');
+    sessionStorage.removeItem(AUTHENTICATED_USER);
+    sessionStorage.removeItem(TOKEN);
   }
 }
 
