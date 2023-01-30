@@ -1,0 +1,13 @@
+<h1>Welcome!!</h1>
+<div class="container">
+    welcome {{user}},You can find your ToDO List <a routerLink = "/todo">Here</a>
+</div>
+<div class = "container">
+    To get the details, please follow the link,
+    <Button (click) = "getWelcomedatawithParameters()" class = "btn btn-success">Click Here for Details</Button>
+</div>
+<div class = "container" *ngIf="WelcomeMessage">
+    <H2>Customized data from DB</H2>
+    {{WelcomeMessage}}
+
+</div>

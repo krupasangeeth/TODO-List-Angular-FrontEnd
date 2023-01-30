@@ -1,0 +1,15 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div>
+            <h1 class="navbar-brand">TODO'S</h1>
+        </div>
+        <ul class="navbar-nav">
+            <li><a routerLink="/welcome/default" class="nav-link" *ngIf="hardCodedAuthenticationService.isUserLogin()">Home</a></li>
+            <li><a routerLink="/todo" class="nav-link" *ngIf="hardCodedAuthenticationService.isUserLogin()">My Todos</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-collapse justify-content-end">
+            <li><a routerLink="/login" class="nav-link" *ngIf="!hardCodedAuthenticationService.isUserLogin()">Login</a></li>
+            <li><a routerLink="/logout" class="nav-link" *ngIf="hardCodedAuthenticationService.isUserLogin()">Logout</a></li>
+        </ul>
+    </nav>
+</header>
